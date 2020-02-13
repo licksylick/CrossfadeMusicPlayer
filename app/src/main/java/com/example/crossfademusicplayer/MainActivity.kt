@@ -2,11 +2,14 @@ package com.example.crossfademusicplayer
 
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.view.View
+import android.widget.Button
 import android.widget.SeekBar
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -27,17 +30,32 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+        val Btn1 = findViewById<Button>(R.id.addBtn1)
+        Btn1.setOnClickListener() {
+            intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.setType("*/*")
+            startActivityForResult(intent, 111)
+        }
+
+        val Btn2 = findViewById<Button>(R.id.addBtn2)
+        Btn2.setOnClickListener() {
+            intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.setType("*/*")
+            startActivityForResult(intent, 112)
+        }
+
+
         mp = MediaPlayer.create(this, R.raw.music)
         mp1 = MediaPlayer.create(this, R.raw.music1)
         mp.isLooping = false
         mp1.isLooping = false
-        mp.setVolume(left1, right)
+        mp.setVolume(left, right)
         mp1.setVolume(left1, right1)
         totalTime = mp.duration
         totalTime1 = mp1.duration
 
         // Position Bar
-        positionBar.max = totalTime
         positionBar.setOnSeekBarChangeListener(
             object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -52,7 +70,7 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        positionBar1.max = totalTime1
+
         positionBar1.setOnSeekBarChangeListener(
             object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -94,7 +112,7 @@ class MainActivity : AppCompatActivity() {
             }
         }).start()
 
-        mp.start()
+        //mp.start()
     }
 
     @SuppressLint("HandlerLeak")
@@ -161,11 +179,40 @@ class MainActivity : AppCompatActivity() {
         return timeLabel1
     }
 
-    fun addBtn1(v: View){
+    fun addBtn1Click(v: View){
 
     }
 
-    fun addBtn2(v: View){
+    fun addBtn2Click(v: View){
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        var path: String?
+        when (requestCode){
+            111 -> {
+                if (resultCode == Activity.RESULT_OK){
+                    mp.reset()
+                    mp = MediaPlayer.create(this, data!!.data)
+                    mp.isLooping = false
+                    mp.setVolume(left1, right)
+                    totalTime = mp.duration
+                    positionBar.max = totalTime
+                    mp.start()
+                }
+            }
+
+            112 -> {
+                if (resultCode == Activity.RESULT_OK){
+                    mp1.reset()
+                    mp1 = MediaPlayer.create(this, data!!.data)
+                    mp1.isLooping = false
+                    mp1.setVolume(left1, right)
+                    totalTime1 = mp1.duration
+                    positionBar1.max = totalTime1
+                }
+            }
+        }
     }
 }
