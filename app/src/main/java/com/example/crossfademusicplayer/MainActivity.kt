@@ -143,7 +143,6 @@ class MainActivity : AppCompatActivity() {
             if (totalTime - currentPosition <= crossFade) {
                 mp1.start()
                 volume -= (volume/(crossFade/1000)*1f)
-
                 volume1 += (volume/(crossFade/1000)*1f)
                 mp.setVolume(volume, volume)
                 mp1.setVolume(volume1, volume1)
@@ -168,7 +167,7 @@ class MainActivity : AppCompatActivity() {
 
             if (totalTime1 - currentPosition1 <= crossFade) {
                 mp.start()
-                volume1 -= (volume/(crossFade/1000)*1f)
+                volume1 -= (volume1/(crossFade/1000)*1f)
                 volume += (volume1/(crossFade/1000)*1f)
                 mp1.setVolume (volume1, volume1)
                 mp.setVolume(volume, volume)
