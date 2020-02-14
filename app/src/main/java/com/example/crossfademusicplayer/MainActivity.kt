@@ -9,10 +9,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.view.View
-import android.widget.Button
 import android.widget.SeekBar
+import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 
+private const val SONG1_REQUEST_CODE = 1
+private const val SONG2_REQUEST_CODE = 2
+private const val DEFAULT_VOLUME = 0.5f
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,40 +24,43 @@ class MainActivity : AppCompatActivity() {
     private var totalTime: Int = 0
     private var totalTime1: Int = 0
 
-    var left = 0.5f
-    var right = 0.5f
-    var left1 = 0.5f
-    var right1 = 0.5f
+    private var volume = 0.5f
+    private var volume1= 0f
+
+    private var crossFade = 1000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        
+        addBtn1.setOnClickListener { pickAudioFile(SONG1_REQUEST_CODE) }
+        addBtn2.setOnClickListener { pickAudioFile(SONG2_REQUEST_CODE) }
 
-
-        val Btn1 = findViewById<Button>(R.id.addBtn1)
-        Btn1.setOnClickListener() {
-            intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.setType("*/*")
-            startActivityForResult(intent, 111)
-        }
-
-        val Btn2 = findViewById<Button>(R.id.addBtn2)
-        Btn2.setOnClickListener() {
-            intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.setType("*/*")
-            startActivityForResult(intent, 112)
-        }
-
-
+        // initMediaPlayers with default songs
         mp = MediaPlayer.create(this, R.raw.music)
         mp1 = MediaPlayer.create(this, R.raw.music1)
         mp.isLooping = false
         mp1.isLooping = false
-        mp.setVolume(left, right)
-        mp1.setVolume(left1, right1)
+        mp.setVolume(DEFAULT_VOLUME, DEFAULT_VOLUME)
+        mp1.setVolume(0f, 0f)
         totalTime = mp.duration
         totalTime1 = mp1.duration
 
+        val fade = findViewById<SeekBar>(R.id.fadeSeekBar)
+        fade.setOnSeekBarChangeListener(
+            object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                    if (fromUser) {
+                        crossFade = progress*1000 + 2000 // Given the delay (2 seconds)
+                        findViewById<TextView>(R.id.fadeValue).setText(progress.toString())
+                    }
+                }
+                override fun onStartTrackingTouch(p0: SeekBar?) {
+                }
+                override fun onStopTrackingTouch(p0: SeekBar?) {
+                }
+            }
+        )
         // Position Bar
         positionBar.setOnSeekBarChangeListener(
             object : SeekBar.OnSeekBarChangeListener {
@@ -69,7 +75,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         )
-
 
         positionBar1.setOnSeekBarChangeListener(
             object : SeekBar.OnSeekBarChangeListener {
@@ -87,9 +92,9 @@ class MainActivity : AppCompatActivity() {
 
         // Thread
         Thread(Runnable {
-            while (mp != null) {
+            while (true) {
                 try {
-                    var msg = Message()
+                    val msg = Message()
                     msg.what = mp.currentPosition
                     handler.sendMessage(msg)
                     Thread.sleep(1000)
@@ -101,9 +106,9 @@ class MainActivity : AppCompatActivity() {
 
         // Thread
         Thread(Runnable {
-            while (mp1 != null) {
+            while (true) {
                 try {
-                    var msg = Message()
+                    val msg = Message()
                     msg.what = mp1.currentPosition
                     handler1.sendMessage(msg)
                     Thread.sleep(1000)
@@ -111,54 +116,70 @@ class MainActivity : AppCompatActivity() {
             }
             }
         }).start()
+    }
 
-        //mp.start()
+    private fun pickAudioFile(requestCode: Int) {
+        val audioUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+        intent = Intent(Intent.ACTION_PICK, audioUri)
+        intent.type = "*/*"
+        startActivityForResult(intent, requestCode)
     }
 
     @SuppressLint("HandlerLeak")
     var handler = object : Handler() {
         override fun handleMessage(msg: Message) {
-            var currentPosition = msg.what
+            val currentPosition = msg.what
 
             // Update positionBar
             positionBar.progress = currentPosition
 
             // Update Labels
-            var elapsedTime = createTimeLabel(currentPosition)
+            val elapsedTime = createTimeLabel(currentPosition)
             elapsedTimeLabel.text = elapsedTime
 
-            var remainingTime = createTimeLabel(totalTime - currentPosition)
+            val remainingTime = createTimeLabel(totalTime - currentPosition)
             remainingTimeLabel.text = "-$remainingTime"
 
-            if (totalTime - currentPosition <= 10000)
+            if (totalTime - currentPosition <= crossFade) {
                 mp1.start()
+                volume -= (volume/(crossFade/1000)*1f)
+
+                volume1 += (volume/(crossFade/1000)*1f)
+                mp.setVolume(volume, volume)
+                mp1.setVolume(volume1, volume1)
+            }
         }
     }
 
     @SuppressLint("HandlerLeak")
     var handler1 = object : Handler() {
         override fun handleMessage(msg: Message) {
-            var currentPosition1 = msg.what
+            val currentPosition1 = msg.what
 
             // Update positionBar
             positionBar1.progress = currentPosition1
 
             // Update Labels
-            var elapsedTime1 = createTimeLabel1(currentPosition1)
+            val elapsedTime1 = createTimeLabel1(currentPosition1)
             elapsedTimeLabel1.text = elapsedTime1
 
-            var remainingTime1 = createTimeLabel1(totalTime1 - currentPosition1)
+            val remainingTime1 = createTimeLabel1(totalTime1 - currentPosition1)
             remainingTimeLabel1.text = "-$remainingTime1"
 
-            if (totalTime1 - currentPosition1 <= 10000)
+            if (totalTime1 - currentPosition1 <= crossFade) {
                 mp.start()
+                volume1 -= (volume/(crossFade/1000)*1f)
+                volume += (volume1/(crossFade/1000)*1f)
+                mp1.setVolume (volume1, volume1)
+                mp.setVolume(volume, volume)
+            }
         }
     }
 
     fun createTimeLabel(time: Int): String {
         var timeLabel = ""
-        var min = time / 1000 / 60
-        var sec = time / 1000 % 60
+        val min = time / 1000 / 60
+        val sec = time / 1000 % 60
 
         timeLabel = "$min:"
         if (sec < 10) timeLabel += "0"
@@ -169,8 +190,8 @@ class MainActivity : AppCompatActivity() {
 
     fun createTimeLabel1(time: Int): String {
         var timeLabel1 = ""
-        var min = time / 1000 / 60
-        var sec = time / 1000 % 60
+        val min = time / 1000 / 60
+        val sec = time / 1000 % 60
 
         timeLabel1 = "$min:"
         if (sec < 10) timeLabel1 += "0"
@@ -189,26 +210,25 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        var path: String?
         when (requestCode){
-            111 -> {
+            SONG1_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK){
                     mp.reset()
                     mp = MediaPlayer.create(this, data!!.data)
                     mp.isLooping = false
-                    mp.setVolume(left1, right)
+                    mp.setVolume(volume, volume)
                     totalTime = mp.duration
                     positionBar.max = totalTime
                     mp.start()
                 }
             }
 
-            112 -> {
+            SONG2_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK){
                     mp1.reset()
                     mp1 = MediaPlayer.create(this, data!!.data)
                     mp1.isLooping = false
-                    mp1.setVolume(left1, right)
+                    mp1.setVolume(volume1, volume1)
                     totalTime1 = mp1.duration
                     positionBar1.max = totalTime1
                 }
@@ -216,3 +236,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+

@@ -29,7 +29,7 @@
     android:id="@+id/positionBar"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:layout_marginTop="30dp"/>
+    android:layout_marginTop="20dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,14 +57,27 @@
         android:gravity="center">
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crossfade Bar"
+        android:layout_gravity="center_horizontal"/>
     <SeekBar
-        android:id="@+id/seekFade"
+        android:id="@+id/fadeSeekBar"
         android:layout_width="100dp"
         android:layout_height="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="0dp"
         android:min="2"
         android:max="10"
         android:progress="2"/>
+    <TextView
+        android:id="@+id/fadeValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="2"
+        android:layout_gravity="center_horizontal"/>
+
     <Button
         android:id="@+id/addBtn2"
         android:layout_width="120dp"
@@ -83,7 +96,7 @@
         android:id="@+id/positionBar1"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="20dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
