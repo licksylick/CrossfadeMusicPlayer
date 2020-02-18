@@ -1,126 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    android:gravity="center"
     android:orientation="vertical"
-    android:gravity="center">
-
-
-    <Button
-        android:id="@+id/addBtn1"
-        android:layout_width="120dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="30dp"
-        android:text="Add 1 track"
-        android:onClick="addBtn1Click"/>
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/image"/>
-
-    <SeekBar
-    android:id="@+id/positionBar"
-    android:layout_width="300dp"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/elapsedTimeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0:00"
-            android:layout_marginLeft="40dp"/>
-
-        <TextView
-            android:id="@+id/remainingTimeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-0:00"
-            android:layout_marginLeft="240dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="18dp"
-        android:gravity="center">
-    </LinearLayout>
+    tools:context=".MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Crossfade Bar"
-        android:layout_gravity="center_horizontal"/>
-    <SeekBar
-        android:id="@+id/fadeSeekBar"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="0dp"
-        android:min="2"
-        android:max="10"
-        android:progress="2"/>
-    <TextView
-        android:id="@+id/fadeValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:text="2"
-        android:layout_gravity="center_horizontal"/>
-
-    <Button
-        android:id="@+id/addBtn2"
-        android:layout_width="120dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="50dp"
-        android:text="Add 2 track"
-        android:onClick="addBtn2Click"/>
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/image"/>
-
-    <SeekBar
-        android:id="@+id/positionBar1"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"/>
+        android:gravity="center"
+        android:text="HOW TO USE?"
+        android:textStyle="bold" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/elapsedTimeLabel1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0:00"
-            android:layout_marginLeft="40dp"/>
-
-        <TextView
-            android:id="@+id/remainingTimeLabel1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-0:00"
-            android:layout_marginLeft="240dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="18dp"
-        android:gravity="center">
-    </LinearLayout>
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="1. Open sounds in directory (use buttons)" />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="2. Set the Crossfade size in Crossfade Bar" />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="3. Click the PLAY button" />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:text="You can change Crossfade size, when the ONE of the songs is playing!" />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:text="Ready? Let's try!" />
+
+
+    <Button
+        android:id="@+id/nextBtn"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:onClick="addBtn1Click"
+        android:text="NEXT" />
+
 </LinearLayout>
