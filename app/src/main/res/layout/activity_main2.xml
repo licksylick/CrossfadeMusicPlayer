@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Main2Activity"
+    android:gravity="center"
     android:orientation="vertical"
-    android:gravity="center">
+    tools:context=".Main2Activity">
 
 
     <Button
@@ -21,68 +20,70 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/image"/>
+        android:src="@drawable/image" />
 
     <SeekBar
         android:id="@+id/positionBar"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/elapsedTimeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0:00"
-            android:layout_marginLeft="40dp"/>
+            android:layout_marginLeft="40dp"
+            android:text="0:00" />
 
         <TextView
             android:id="@+id/remainingTimeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="-0:00"
-            android:layout_marginLeft="240dp"/>
+            android:layout_marginLeft="240dp"
+            android:text="-0:00" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="18dp"
-        android:gravity="center">
-    </LinearLayout>
+        android:gravity="center"
+        android:orientation="horizontal"></LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Crossfade Bar"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:text="Crossfade Bar" />
+
     <SeekBar
         android:id="@+id/fadeSeekBar"
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:layout_marginTop="0dp"
-        android:min="2"
         android:max="10"
-        android:progress="2"/>
+        android:min="2"
+        android:progress="2" />
+
     <TextView
         android:id="@+id/fadeValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
         android:text="2"
-        android:layout_gravity="center_horizontal"/>
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/playBtn"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
         android:background="@drawable/play"
-        android:onClick="playBtnClick"
-        android:layout_gravity="center_horizontal"/>
+        android:onClick="playBtnClick" />
 
     <Button
         android:id="@+id/addBtn2"
@@ -95,37 +96,37 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/image"/>
+        android:src="@drawable/image" />
 
     <SeekBar
         android:id="@+id/positionBar1"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/elapsedTimeLabel1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0:00"
-            android:layout_marginLeft="40dp"/>
+            android:layout_marginLeft="40dp"
+            android:text="0:00" />
 
         <TextView
             android:id="@+id/remainingTimeLabel1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="-0:00"
-            android:layout_marginLeft="240dp"/>
+            android:layout_marginLeft="240dp"
+            android:text="-0:00" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="18dp"
-        android:gravity="center">
-    </LinearLayout>
+        android:gravity="center"
+        android:orientation="horizontal"></LinearLayout>
 </LinearLayout>
