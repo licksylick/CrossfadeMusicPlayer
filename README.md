@@ -1,1 +1,1 @@
-Download apk link: http://bit.ly/cfademusicplayer
+Download apk link: http://bit.ly/crossfadeplayer
