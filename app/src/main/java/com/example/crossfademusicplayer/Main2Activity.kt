@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.view.KeyEvent
 import android.view.View
 import android.widget.SeekBar
 import android.widget.TextView
@@ -31,6 +33,7 @@ class Main2Activity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestedOrientation =  (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         setContentView(R.layout.activity_main2)
 
         addBtn1.setOnClickListener { pickAudioFile(SONG1_REQUEST_CODE) }
@@ -251,6 +254,17 @@ class Main2Activity : AppCompatActivity() {
     fun playBtnClick(v: View) {
         mp.start()
         playBtn.visibility = View.INVISIBLE
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            mp.stop()
+            mp1.stop()
+            finish()
+            return true
+        }
+        return false
     }
 }
 
